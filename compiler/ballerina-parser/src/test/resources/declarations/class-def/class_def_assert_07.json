@@ -24,65 +24,45 @@
               "children": [
                 {
                   "kind": "SIMPLE_NAME_REFERENCE",
+                  "hasDiagnostics": true,
                   "children": [
                     {
                       "kind": "IDENTIFIER_TOKEN",
+                      "hasDiagnostics": true,
+                      "diagnostics": [
+                        "ERROR_ONLY_CAPTURE_BINDING_PATTERN_IS_SUPPORTED_IN_MODULE_VAR_DECL"
+                      ],
                       "value": "Student",
                       "trailingMinutiae": [
                         {
                           "kind": "WHITESPACE_MINUTIAE",
                           "value": " "
+                        },
+                        {
+                          "kind": "INVALID_NODE_MINUTIAE",
+                          "invalidNode": {
+                            "kind": "INVALID_TOKEN_MINUTIAE_NODE",
+                            "children": [
+                              {
+                                "kind": "OPEN_BRACE_TOKEN"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "END_OF_LINE_MINUTIAE",
+                          "value": "\n"
                         }
                       ]
                     }
                   ]
                 },
                 {
-                  "kind": "MAPPING_BINDING_PATTERN",
-                  "hasDiagnostics": true,
+                  "kind": "CAPTURE_BINDING_PATTERN",
                   "children": [
                     {
-                      "kind": "OPEN_BRACE_TOKEN",
-                      "trailingMinutiae": [
-                        {
-                          "kind": "END_OF_LINE_MINUTIAE",
-                          "value": "\n"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "LIST",
-                      "hasDiagnostics": true,
-                      "children": [
-                        {
-                          "kind": "FIELD_BINDING_PATTERN",
-                          "hasDiagnostics": true,
-                          "children": [
-                            {
-                              "kind": "SIMPLE_NAME_REFERENCE",
-                              "hasDiagnostics": true,
-                              "children": [
-                                {
-                                  "kind": "IDENTIFIER_TOKEN",
-                                  "isMissing": true,
-                                  "hasDiagnostics": true,
-                                  "diagnostics": [
-                                    "ERROR_MISSING_IDENTIFIER"
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "CLOSE_BRACE_TOKEN",
-                      "isMissing": true,
-                      "hasDiagnostics": true,
-                      "diagnostics": [
-                        "ERROR_MISSING_CLOSE_BRACE_TOKEN"
-                      ]
+                      "kind": "IDENTIFIER_TOKEN",
+                      "isMissing": true
                     }
                   ]
                 }
