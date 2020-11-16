@@ -3550,9 +3550,23 @@ public class BallerinaParser extends AbstractParser {
                                                  List<STNode> typeDescQualifiers,
                                      boolean isModuleVar) {
         startContext(ParserRuleContext.VAR_DECL_STMT);
-        STNode typeBindingPattern = parseTypedBindingPattern(typeDescQualifiers,
+        STNode typedBindingPattern = parseTypedBindingPattern(typeDescQualifiers,
                 ParserRuleContext.VAR_DECL_STMT);
-        return parseVarDeclRhs(annots, isolatedFinalQualifiers, typeBindingPattern, isModuleVar);
+
+        // TODO: this is a temporary workaround to tackle CCEs at BLangNodeTransformer.
+        //  remove once all binding patterns are supported in the compiler.
+        if (isModuleVar && typedBindingPattern.childInBucket(1).kind != SyntaxKind.CAPTURE_BINDING_PATTERN) {
+            STTypedBindingPatternNode typedBindingPatternNode = (STTypedBindingPatternNode) typedBindingPattern;
+            STNode typeDescriptor = typedBindingPatternNode.typeDescriptor;
+            STNode bindingPattern = typedBindingPatternNode.bindingPattern;
+
+            typeDescriptor = SyntaxErrors.cloneWithTrailingInvalidNodeMinutiae(typeDescriptor, bindingPattern,
+                    DiagnosticErrorCode.ERROR_ONLY_CAPTURE_BINDING_PATTERN_IS_SUPPORTED_IN_MODULE_VAR_DECL);
+            STToken missingIdentifier = SyntaxErrors.createMissingToken(SyntaxKind.IDENTIFIER_TOKEN);
+            STNode newCaptureBP = STNodeFactory.createCaptureBindingPatternNode(missingIdentifier);
+            typedBindingPattern = STNodeFactory.createTypedBindingPatternNode(typeDescriptor, newCaptureBP);
+        }
+        return parseVarDeclRhs(annots, isolatedFinalQualifiers, typedBindingPattern, isModuleVar);
     }
 
     /**
