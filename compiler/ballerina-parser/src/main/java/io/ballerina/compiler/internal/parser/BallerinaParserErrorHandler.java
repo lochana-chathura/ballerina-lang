@@ -716,30 +716,6 @@ public class BallerinaParserErrorHandler extends AbstractParserErrorHandler {
     private static final ParserRuleContext[] TYPEDESC_TYPE_DESCRIPTOR_RHS =
             { ParserRuleContext.LT, ParserRuleContext.TYPEDESC_RHS };
 
-    private static final ParserRuleContext[] ERROR_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.ERROR_TYPE_PARAM_START };
-
-    private static final ParserRuleContext[] PARAMETERIZED_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.LT};
-
-    private static final ParserRuleContext[] OBJECT_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.OBJECT_TYPE_OBJECT_KEYWORD_RHS };
-
-    private static final ParserRuleContext[] STREAM_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.LT };
-
-    private static final ParserRuleContext[] TABLE_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.ROW_TYPE_PARAM };
-
-    private static final ParserRuleContext[] TYPEDESC_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.TYPEDESC_TYPE_DESCRIPTOR_RHS };
-
-    private static final ParserRuleContext[] XML_TYPE_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.TYPEDESC_TYPE_DESCRIPTOR_RHS };
-
-    private static final ParserRuleContext[] TYPEDESC_RHS_OR_TYPE_REF =
-            { ParserRuleContext.COLON, ParserRuleContext.TYPEDESC_RHS };
-
     private static final ParserRuleContext[] TRANSACTION_STMT_RHS_OR_TYPE_REF =
             { ParserRuleContext.TYPE_REF_COLON, ParserRuleContext.TRANSACTION_STMT_TRANSACTION_KEYWORD_RHS };
 
@@ -1594,14 +1570,6 @@ public class BallerinaParserErrorHandler extends AbstractParserErrorHandler {
             case SERVICE_DECL_START:
             case ERROR_CONSTRUCTOR_RHS:
             case TYPEDESC_TYPE_DESCRIPTOR_RHS:
-            case ERROR_TYPE_OR_TYPE_REF:
-            case PARAMETERIZED_TYPE_OR_TYPE_REF:
-            case OBJECT_TYPE_OR_TYPE_REF:
-            case STREAM_TYPE_OR_TYPE_REF:
-            case TABLE_TYPE_OR_TYPE_REF:
-            case TYPEDESC_TYPE_OR_TYPE_REF:
-            case XML_TYPE_OR_TYPE_REF:
-            case TYPEDESC_RHS_OR_TYPE_REF:
             case TRANSACTION_STMT_RHS_OR_TYPE_REF:
             case TABLE_CONS_OR_QUERY_EXPR_OR_VAR_REF:
             case QUERY_EXPR_OR_VAR_REF:
@@ -1882,30 +1850,6 @@ public class BallerinaParserErrorHandler extends AbstractParserErrorHandler {
                 break;
             case TYPEDESC_TYPE_DESCRIPTOR_RHS:
                 alternativeRules = TYPEDESC_TYPE_DESCRIPTOR_RHS;
-                break;
-            case ERROR_TYPE_OR_TYPE_REF:
-                alternativeRules = ERROR_TYPE_OR_TYPE_REF;
-                break;
-            case PARAMETERIZED_TYPE_OR_TYPE_REF:
-                alternativeRules = PARAMETERIZED_TYPE_OR_TYPE_REF;
-                break;
-            case OBJECT_TYPE_OR_TYPE_REF:
-                alternativeRules = OBJECT_TYPE_OR_TYPE_REF;
-                break;
-            case STREAM_TYPE_OR_TYPE_REF:
-                alternativeRules = STREAM_TYPE_OR_TYPE_REF;
-                break;
-            case TABLE_TYPE_OR_TYPE_REF:
-                alternativeRules = TABLE_TYPE_OR_TYPE_REF;
-                break;
-            case TYPEDESC_TYPE_OR_TYPE_REF:
-                alternativeRules = TYPEDESC_TYPE_OR_TYPE_REF;
-                break;
-            case XML_TYPE_OR_TYPE_REF:
-                alternativeRules = XML_TYPE_OR_TYPE_REF;
-                break;
-            case TYPEDESC_RHS_OR_TYPE_REF:
-                alternativeRules = TYPEDESC_RHS_OR_TYPE_REF;
                 break;
             case TRANSACTION_STMT_RHS_OR_TYPE_REF:
                 alternativeRules = TRANSACTION_STMT_RHS_OR_TYPE_REF;

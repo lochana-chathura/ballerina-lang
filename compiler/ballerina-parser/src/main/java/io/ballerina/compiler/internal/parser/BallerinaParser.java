@@ -2380,13 +2380,12 @@ public class BallerinaParser extends AbstractParser {
                                                boolean isInConditionalExpr) {
         parseTypeDescQualifiers(qualifiers);
         STToken nextToken = peek();
-        if (isQualifiedIdentifierPredeclaredPrefix(nextToken.kind)) {
-            return parseQualifiedTypeRefOrTypeDesc(qualifiers, isInConditionalExpr);
+        if (isIdentifier(nextToken.kind)) {
+            reportInvalidQualifierList(qualifiers);
+            return parseTypeReference(isInConditionalExpr);
         }
+        
         switch (nextToken.kind) {
-            case IDENTIFIER_TOKEN:
-                reportInvalidQualifierList(qualifiers);
-                return parseTypeReference(isInConditionalExpr);
             case RECORD_KEYWORD:
                 reportInvalidQualifierList(qualifiers);
                 return parseRecordTypeDescriptor();
@@ -2459,80 +2458,6 @@ public class BallerinaParser extends AbstractParser {
                 DiagnosticErrorCode.ERROR_MISSING_COLON_TOKEN);
         STNode varOrFuncName = parseIdentifier(context);
         return STNodeFactory.createQualifiedNameReferenceNode(identifier, colon, varOrFuncName);
-    }
-
-    private STNode parseQualifiedTypeRefOrTypeDesc(List<STNode> qualifiers, boolean isInConditionalExpr) {
-        STToken preDeclaredPrefix = consume();
-        STToken nextNextToken = getNextNextToken();
-        if (preDeclaredPrefix.kind == SyntaxKind.TRANSACTION_KEYWORD ||
-                nextNextToken.kind == SyntaxKind.IDENTIFIER_TOKEN) {
-            reportInvalidQualifierList(qualifiers);
-            return parseQualifiedIdentifierWithPredeclPrefix(preDeclaredPrefix, isInConditionalExpr);
-        }
-        ParserRuleContext context;
-        switch (preDeclaredPrefix.kind) {
-            case ERROR_KEYWORD:
-                context = ParserRuleContext.ERROR_TYPE_OR_TYPE_REF;
-                break;
-            case MAP_KEYWORD:
-            case FUTURE_KEYWORD:
-                context = ParserRuleContext.PARAMETERIZED_TYPE_OR_TYPE_REF;
-                break;
-            case OBJECT_KEYWORD:
-                context = ParserRuleContext.OBJECT_TYPE_OR_TYPE_REF;
-                break;
-            case STREAM_KEYWORD:
-                context = ParserRuleContext.STREAM_TYPE_OR_TYPE_REF;
-                break;
-            case TABLE_KEYWORD:
-                context = ParserRuleContext.TABLE_TYPE_OR_TYPE_REF;
-                break;
-            case TYPEDESC_KEYWORD:
-                context = ParserRuleContext.TYPEDESC_TYPE_OR_TYPE_REF;
-                break;
-            case XML_KEYWORD:
-                context = ParserRuleContext.XML_TYPE_OR_TYPE_REF;
-                break;
-            default:
-                context = ParserRuleContext.TYPEDESC_RHS_OR_TYPE_REF;
-        }
-
-        Solution solution = recover(peek(), context);
-
-        if (solution.action == Action.KEEP) {
-            reportInvalidQualifierList(qualifiers);
-            return parseQualifiedIdentifierWithPredeclPrefix(preDeclaredPrefix, isInConditionalExpr);
-        }
-        return parseTypeDescStartWithPredeclPrefix(preDeclaredPrefix, qualifiers);
-    }
-
-    private STNode parseTypeDescStartWithPredeclPrefix(STToken preDeclaredPrefix, List<STNode> qualifiers) {
-        switch (preDeclaredPrefix.kind) {
-            case ERROR_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseErrorTypeDescriptor(preDeclaredPrefix);
-            case MAP_KEYWORD:
-            case FUTURE_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseParameterizedTypeDescriptor(preDeclaredPrefix);
-            case OBJECT_KEYWORD:
-                STNode objectTypeQualifiers = createObjectTypeQualNodeList(qualifiers);
-                return parseObjectTypeDescriptor(preDeclaredPrefix, objectTypeQualifiers);
-            case STREAM_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseStreamTypeDescriptor(preDeclaredPrefix);
-            case TABLE_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseTableTypeDescriptor(preDeclaredPrefix);
-            case TYPEDESC_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseTypedescTypeDescriptor(preDeclaredPrefix);
-            case XML_KEYWORD:
-                reportInvalidQualifierList(qualifiers);
-                return parseXmlTypeDescriptor(preDeclaredPrefix);
-            default:
-                return createBuiltinSimpleNameReference(preDeclaredPrefix);
-        }
     }
 
     private STNode parseQualifiedIdentifierWithPredeclPrefix(STToken preDeclaredPrefix, boolean isInConditionalExpr) {
