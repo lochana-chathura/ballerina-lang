@@ -390,7 +390,7 @@ public class MarkdownDocumentationTest {
     @Test(description = "Test doc negative cases.")
     public void testDocumentationNegative() {
         CompileResult compileResult = BCompileUtil.compile("test-src/documentation/markdown_negative.bal");
-        Assert.assertEquals(compileResult.getErrorCount(), 0);
+        Assert.assertEquals(compileResult.getErrorCount(), 5);
         Assert.assertEquals(compileResult.getWarnCount(), 53);
 
         int index = 0;
@@ -785,5 +785,26 @@ public class MarkdownDocumentationTest {
         BLangFunction bLangFunction = objectTypeNode.functions.get(0);
         BLangMarkdownDocumentation markdownDocumentationAttachment = bLangFunction.getMarkdownDocumentationAttachment();
         Assert.assertEquals(markdownDocumentationAttachment.getDocumentation(), "This is the doc");
+    }
+
+    @Test(description = "Test error for docs on disallowed constructs")
+    public void testDocumentationOnDisallowedConstructs() {
+        CompileResult compileResult =
+                BCompileUtil.compile("test-src/documentation/markdown_on_disallowed_constructs.bal");
+        Assert.assertEquals(compileResult.getErrorCount(), 5);
+        Assert.assertEquals(compileResult.getWarnCount(), 0);
+
+        int index = 0;
+
+        BAssertUtil.validateError(compileResult, index++,
+                "documentation and annotations are not allowed for 'import declaration'", 17, 1);
+        BAssertUtil.validateError(compileResult, index++,
+                "cannot resolve module 'foobar/foo.bar.baz as pkg1'", 18, 1);
+        BAssertUtil.validateError(compileResult, index++,
+                "documentation and annotations are not allowed for 'XML namespace declaration'", 20, 1);
+        BAssertUtil.validateError(compileResult, index++,
+                "documentation and annotations are not allowed for 'record rest descriptor'", 25, 15);
+        BAssertUtil.validateError(compileResult, index,
+                "documentation and annotations are not allowed for 'object type inclusion'", 34, 5);
     }
 }
