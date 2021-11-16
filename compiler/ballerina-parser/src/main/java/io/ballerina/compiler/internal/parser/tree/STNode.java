@@ -309,7 +309,7 @@ public abstract class STNode {
     private int getFirstChildIndex(STNode... children) {
         for (int index = 0; index < children.length; index++) {
             STNode child = children[index];
-            if (SyntaxUtils.isSTNodePresent(child) && child.widthWithMinutiae != 0) {
+            if (SyntaxUtils.isSTNodePresent(child) && !NodeListUtils.isEmptySTNodeList(child)) {
                 return index;
             }
         }
@@ -319,7 +319,7 @@ public abstract class STNode {
     private int getLastChildIndex(STNode... children) {
         for (int index = children.length - 1; index >= 0; index--) {
             STNode child = children[index];
-            if (SyntaxUtils.isSTNodePresent(child) && child.widthWithMinutiae != 0) {
+            if (SyntaxUtils.isSTNodePresent(child) && !NodeListUtils.isEmptySTNodeList(child)) {
                 return index;
             }
         }

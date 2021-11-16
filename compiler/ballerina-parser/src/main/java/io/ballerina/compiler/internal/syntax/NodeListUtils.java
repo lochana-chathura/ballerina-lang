@@ -18,6 +18,7 @@
 package io.ballerina.compiler.internal.syntax;
 
 import io.ballerina.compiler.internal.parser.tree.STNode;
+import io.ballerina.compiler.internal.parser.tree.STNodeList;
 import io.ballerina.compiler.syntax.tree.SyntaxKind;
 
 /**
@@ -31,6 +32,10 @@ public class NodeListUtils {
 
     public static boolean isSTNodeList(STNode node) {
         return node.kind == SyntaxKind.LIST;
+    }
+
+    public static boolean isEmptySTNodeList(STNode node) {
+        return isSTNodeList(node) && ((STNodeList) node).isEmpty();
     }
 
     public static void rangeCheck(int index, int size) {
