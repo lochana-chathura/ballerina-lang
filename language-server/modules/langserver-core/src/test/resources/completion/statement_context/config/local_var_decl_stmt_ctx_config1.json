@@ -682,6 +682,14 @@
       "filterText": "worker",
       "insertText": "worker ${1:name} {\n\t${2}\n}",
       "insertTextFormat": "Snippet"
+    },
+    {
+      "label": "host",
+      "kind": "Variable",
+      "detail": "string",
+      "sortText": "B",
+      "insertText": "host",
+      "insertTextFormat": "Snippet"
     }
   ]
 }
