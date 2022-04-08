@@ -2787,15 +2787,6 @@ public class CodeAnalyzer extends SimpleBLangNodeAnalyzer<CodeAnalyzer.AnalyzerD
     }
 
     @Override
-    public void visit(BLangConstRef constRef, AnalyzerData data) {
-    }
-
-    @Override
-    public void visit(BLangListConstructorExpr listConstructorExpr, AnalyzerData data) {
-        analyzeExprs(listConstructorExpr.exprs, data);
-    }
-
-    @Override
     public void visit(BLangTableConstructorExpr tableConstructorExpr, AnalyzerData data) {
         analyzeExprs(tableConstructorExpr.recordLiteralList, data);
     }
