@@ -1725,7 +1725,7 @@ public class TypeChecker extends SimpleBLangNodeAnalyzer<TypeChecker.AnalyzerDat
                 BArrayType bArrayType = (BArrayType) spreadOpExprType;
                 inferredTupleDetails.restMemberTypes.add(bArrayType.eType);
             } else {
-                dlog.error(spreadMemberPos, DiagnosticErrorCode.CANNOT_INFER_TYPE_FROM_SPREAD_OP); // TODO: change error msg
+                dlog.error(spreadMemberPos, DiagnosticErrorCode.CANNOT_INFER_TYPE_FROM_SPREAD_OP, spreadOpExprType);
                 inferredTupleDetails.restMemberTypes.add(symTable.semanticError);
             }
             return;
@@ -1747,7 +1747,7 @@ public class TypeChecker extends SimpleBLangNodeAnalyzer<TypeChecker.AnalyzerDat
                 inferredTupleDetails.restMemberTypes.add(bArrayType.eType);
             }
         } else {
-            dlog.error(spreadMemberPos, DiagnosticErrorCode.CANNOT_INFER_TYPE_FROM_SPREAD_OP);
+            dlog.error(spreadMemberPos, DiagnosticErrorCode.CANNOT_INFER_TYPE_FROM_SPREAD_OP, spreadOpExprType);
             inferredTupleDetails.fixedMemberTypes.add(symTable.semanticError);
         }
     }
