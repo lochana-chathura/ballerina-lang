@@ -2532,10 +2532,12 @@ public abstract class STTreeModifier extends STNodeTransformer<STNode> {
     @Override
     public STDoStatementNode transform(
             STDoStatementNode doStatementNode) {
+        STNode annotations = modifyNode(doStatementNode.annotations);
         STNode doKeyword = modifyNode(doStatementNode.doKeyword);
         STNode blockStatement = modifyNode(doStatementNode.blockStatement);
         STNode onFailClause = modifyNode(doStatementNode.onFailClause);
         return doStatementNode.modify(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause);

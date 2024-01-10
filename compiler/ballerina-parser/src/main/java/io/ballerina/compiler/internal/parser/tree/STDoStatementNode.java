@@ -31,15 +31,18 @@ import java.util.Collections;
  * @since 2.0.0
  */
 public class STDoStatementNode extends STStatementNode {
+    public final STNode annotations;
     public final STNode doKeyword;
     public final STNode blockStatement;
     public final STNode onFailClause;
 
     STDoStatementNode(
+            STNode annotations,
             STNode doKeyword,
             STNode blockStatement,
             STNode onFailClause) {
         this(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause,
@@ -47,16 +50,19 @@ public class STDoStatementNode extends STStatementNode {
     }
 
     STDoStatementNode(
+            STNode annotations,
             STNode doKeyword,
             STNode blockStatement,
             STNode onFailClause,
             Collection<STNodeDiagnostic> diagnostics) {
         super(SyntaxKind.DO_STATEMENT, diagnostics);
+        this.annotations = annotations;
         this.doKeyword = doKeyword;
         this.blockStatement = blockStatement;
         this.onFailClause = onFailClause;
 
         addChildren(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause);
@@ -64,6 +70,7 @@ public class STDoStatementNode extends STStatementNode {
 
     public STNode modifyWith(Collection<STNodeDiagnostic> diagnostics) {
         return new STDoStatementNode(
+                this.annotations,
                 this.doKeyword,
                 this.blockStatement,
                 this.onFailClause,
@@ -71,10 +78,12 @@ public class STDoStatementNode extends STStatementNode {
     }
 
     public STDoStatementNode modify(
+            STNode annotations,
             STNode doKeyword,
             STNode blockStatement,
             STNode onFailClause) {
         if (checkForReferenceEquality(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause)) {
@@ -82,6 +91,7 @@ public class STDoStatementNode extends STStatementNode {
         }
 
         return new STDoStatementNode(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause,

@@ -72,6 +72,10 @@
               "kind": "DO_STATEMENT",
               "children": [
                 {
+                  "kind": "LIST",
+                  "children": []
+                },
+                {
                   "kind": "DO_KEYWORD",
                   "leadingMinutiae": [
                     {

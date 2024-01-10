@@ -76,6 +76,10 @@
               "hasDiagnostics": true,
               "children": [
                 {
+                  "kind": "LIST",
+                  "children": []
+                },
+                {
                   "kind": "DO_KEYWORD",
                   "leadingMinutiae": [
                     {

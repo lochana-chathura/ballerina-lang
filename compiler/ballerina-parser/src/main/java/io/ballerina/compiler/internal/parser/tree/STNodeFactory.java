@@ -2356,11 +2356,13 @@ public class STNodeFactory extends STAbstractNodeFactory {
     }
 
     public static STNode createDoStatementNode(
+            STNode annotations,
             STNode doKeyword,
             STNode blockStatement,
             STNode onFailClause) {
 
         return new STDoStatementNode(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause);

@@ -3149,13 +3149,16 @@ public abstract class NodeFactory extends AbstractNodeFactory {
     }
 
     public static DoStatementNode createDoStatementNode(
+            NodeList<AnnotationNode> annotations,
             Token doKeyword,
             BlockStatementNode blockStatement,
             OnFailClauseNode onFailClause) {
+        Objects.requireNonNull(annotations, "annotations must not be null");
         Objects.requireNonNull(doKeyword, "doKeyword must not be null");
         Objects.requireNonNull(blockStatement, "blockStatement must not be null");
 
         STNode stDoStatementNode = STNodeFactory.createDoStatementNode(
+                annotations.underlyingListNode().internalNode(),
                 doKeyword.internalNode(),
                 blockStatement.internalNode(),
                 getOptionalSTNode(onFailClause));
@@ -3638,4 +3641,3 @@ public abstract class NodeFactory extends AbstractNodeFactory {
         return stReceiveFieldNode.createUnlinkedFacade();
     }
 }
-

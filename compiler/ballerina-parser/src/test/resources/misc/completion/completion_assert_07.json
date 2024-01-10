@@ -380,6 +380,10 @@
                       "hasDiagnostics": true,
                       "children": [
                         {
+                          "kind": "LIST",
+                          "children": []
+                        },
+                        {
                           "kind": "DO_KEYWORD",
                           "leadingMinutiae": [
                             {
@@ -516,6 +520,10 @@
                       "kind": "DO_STATEMENT",
                       "hasDiagnostics": true,
                       "children": [
+                        {
+                          "kind": "LIST",
+                          "children": []
+                        },
                         {
                           "kind": "DO_KEYWORD",
                           "leadingMinutiae": [

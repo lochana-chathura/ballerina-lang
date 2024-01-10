@@ -33,16 +33,20 @@ public class DoStatementNode extends StatementNode {
         super(internalNode, position, parent);
     }
 
-    public Token doKeyword() {
-        return childInBucket(0);
+    public NodeList<AnnotationNode> annotations() {
+        return new NodeList<>(childInBucket(0));
     }
 
-    public BlockStatementNode blockStatement() {
+    public Token doKeyword() {
         return childInBucket(1);
     }
 
+    public BlockStatementNode blockStatement() {
+        return childInBucket(2);
+    }
+
     public Optional<OnFailClauseNode> onFailClause() {
-        return optionalChildInBucket(2);
+        return optionalChildInBucket(3);
     }
 
     @Override
@@ -58,16 +62,19 @@ public class DoStatementNode extends StatementNode {
     @Override
     protected String[] childNames() {
         return new String[]{
+                "annotations",
                 "doKeyword",
                 "blockStatement",
                 "onFailClause"};
     }
 
     public DoStatementNode modify(
+            NodeList<AnnotationNode> annotations,
             Token doKeyword,
             BlockStatementNode blockStatement,
             OnFailClauseNode onFailClause) {
         if (checkForReferenceEquality(
+                annotations.underlyingListNode(),
                 doKeyword,
                 blockStatement,
                 onFailClause)) {
@@ -75,6 +82,7 @@ public class DoStatementNode extends StatementNode {
         }
 
         return NodeFactory.createDoStatementNode(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause);
@@ -91,15 +99,24 @@ public class DoStatementNode extends StatementNode {
      */
     public static class DoStatementNodeModifier {
         private final DoStatementNode oldNode;
+        private NodeList<AnnotationNode> annotations;
         private Token doKeyword;
         private BlockStatementNode blockStatement;
         private OnFailClauseNode onFailClause;
 
         public DoStatementNodeModifier(DoStatementNode oldNode) {
             this.oldNode = oldNode;
+            this.annotations = oldNode.annotations();
             this.doKeyword = oldNode.doKeyword();
             this.blockStatement = oldNode.blockStatement();
             this.onFailClause = oldNode.onFailClause().orElse(null);
+        }
+
+        public DoStatementNodeModifier withAnnotations(
+                NodeList<AnnotationNode> annotations) {
+            Objects.requireNonNull(annotations, "annotations must not be null");
+            this.annotations = annotations;
+            return this;
         }
 
         public DoStatementNodeModifier withDoKeyword(
@@ -124,6 +141,7 @@ public class DoStatementNode extends StatementNode {
 
         public DoStatementNode apply() {
             return oldNode.modify(
+                    annotations,
                     doKeyword,
                     blockStatement,
                     onFailClause);

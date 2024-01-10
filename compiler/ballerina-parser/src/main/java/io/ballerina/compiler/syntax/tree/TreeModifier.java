@@ -3196,6 +3196,8 @@ public abstract class TreeModifier extends NodeTransformer<Node> {
     @Override
     public DoStatementNode transform(
             DoStatementNode doStatementNode) {
+        NodeList<AnnotationNode> annotations =
+                modifyNodeList(doStatementNode.annotations());
         Token doKeyword =
                 modifyToken(doStatementNode.doKeyword());
         BlockStatementNode blockStatement =
@@ -3203,6 +3205,7 @@ public abstract class TreeModifier extends NodeTransformer<Node> {
         OnFailClauseNode onFailClause =
                 modifyNode(doStatementNode.onFailClause().orElse(null));
         return doStatementNode.modify(
+                annotations,
                 doKeyword,
                 blockStatement,
                 onFailClause);

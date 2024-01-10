@@ -4396,9 +4396,8 @@ public class BallerinaParser extends AbstractParser {
                 reportInvalidQualifierList(qualifiers);
                 return parseWhileStatement();
             case DO_KEYWORD:
-                reportInvalidStatementAnnots(annots, qualifiers);
                 reportInvalidQualifierList(qualifiers);
-                return parseDoStatement();
+                return parseDoStatement(getAnnotations(annots));
             case PANIC_KEYWORD:
                 reportInvalidStatementAnnots(annots, qualifiers);
                 reportInvalidQualifierList(qualifiers);
@@ -7135,15 +7134,16 @@ public class BallerinaParser extends AbstractParser {
      * Parse do statement.
      * <code>do-stmt := do block-stmt [on-fail-clause]</code>
      *
+     * @param annots Annotations that precedes do-stmt
      * @return Do statement
      */
-    private STNode parseDoStatement() {
+    private STNode parseDoStatement(STNode annots) {
         startContext(ParserRuleContext.DO_BLOCK);
         STNode doKeyword = parseDoKeyword();
         STNode doBody = parseBlockNode();
         endContext();
         STNode onFailClause = parseOptionalOnFailClause();
-        return STNodeFactory.createDoStatementNode(doKeyword, doBody, onFailClause);
+        return STNodeFactory.createDoStatementNode(annots, doKeyword, doBody, onFailClause);
     }
 
     /**
@@ -9628,6 +9628,7 @@ public class BallerinaParser extends AbstractParser {
             case CONST_KEYWORD:
             case LISTENER_KEYWORD:
             case WORKER_KEYWORD:
+            case DO_KEYWORD:
                 // fall through
 
             case SOURCE_KEYWORD:
@@ -9672,7 +9673,7 @@ public class BallerinaParser extends AbstractParser {
      * Parse attach point ident gievn.
      * <p>
      * <code>
-     * source-only-attach-point-ident := annotation | external | var | const | listener | worker
+     * source-only-attach-point-ident := annotation | external | var | const | listener | worker | do
      * <br/><br/>
      * dual-attach-point-ident := type | class | [object|service remote] function | parameter
      * | return | service | [object|record] field
@@ -9689,6 +9690,7 @@ public class BallerinaParser extends AbstractParser {
             case CONST_KEYWORD:
             case LISTENER_KEYWORD:
             case WORKER_KEYWORD:
+            case DO_KEYWORD:
                 STNode firstIdent = consume();
                 STNode identList = STNodeFactory.createNodeList(firstIdent);
                 return STNodeFactory.createAnnotationAttachPointNode(sourceKeyword, identList);
