@@ -298,6 +298,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangServiceConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStatementExpression;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -918,6 +919,10 @@ public class TreeBuilder {
 
     public static BLangAlternateWorkerReceive createAlternateWorkerReceiveNode() {
         return new BLangAlternateWorkerReceive();
+    }
+
+    public static BLangStreamWorkerReceive createStreamWorkerReceiveNode() {
+        return new BLangStreamWorkerReceive();
     }
 
     public static BLangMultipleWorkerReceive createMultipleWorkerReceiveNode() {

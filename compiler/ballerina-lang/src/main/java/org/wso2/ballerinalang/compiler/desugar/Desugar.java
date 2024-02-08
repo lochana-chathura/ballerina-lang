@@ -203,6 +203,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangL
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangPackageVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangTypeLoad;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStatementExpression;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -8253,6 +8254,11 @@ public class Desugar extends BLangNodeVisitor {
     @Override
     public void visit(BLangAlternateWorkerReceive altWorkerReceive) {
         result = altWorkerReceive;
+    }
+
+    @Override
+    public void visit(BLangStreamWorkerReceive streamWorkerReceive) {
+        result = streamWorkerReceive;
     }
 
     @Override

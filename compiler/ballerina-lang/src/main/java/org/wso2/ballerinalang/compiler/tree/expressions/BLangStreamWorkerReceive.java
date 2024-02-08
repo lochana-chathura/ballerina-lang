@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com).
+ *  Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com).
  *
  *  WSO2 LLC. licenses this file to you under the Apache License,
  *  Version 2.0 (the "License"); you may not use this file except
@@ -26,17 +26,17 @@ import org.wso2.ballerinalang.compiler.tree.BLangNodeVisitor;
 import java.util.List;
 
 /**
- * Represents alternate-receive in worker communication.
+ * Represents stream-receive in worker communication.
  *
  * @since 2201.9.0
  */
-public class BLangAlternateWorkerReceive extends BLangExpression implements ActionNode {
+public class BLangStreamWorkerReceive extends BLangExpression implements ActionNode {
 
     private List<BLangWorkerReceive> workerReceives;
 
     @Override
     public NodeKind getKind() {
-        return NodeKind.ALTERNATE_WORKER_RECEIVE;
+        return NodeKind.STREAM_WORKER_RECEIVE;
     }
 
     @Override
@@ -60,20 +60,5 @@ public class BLangAlternateWorkerReceive extends BLangExpression implements Acti
 
     public void setWorkerReceives(List<BLangWorkerReceive> workerReceives) {
         this.workerReceives = workerReceives;
-    }
-
-    @Override
-    public String toString() {
-        return "AlternateWorkerReceive: " + this.toActionString();
-    }
-
-    public String toActionString() {
-        StringBuilder sb = new StringBuilder(" <- ");
-        int size = workerReceives.size();
-        for (int i = 0; i < size - 1; i++) {
-            sb.append(workerReceives.get(i)).append(" | ");
-        }
-        sb.append(workerReceives.get(size - 1));
-        return sb.toString();
     }
 }

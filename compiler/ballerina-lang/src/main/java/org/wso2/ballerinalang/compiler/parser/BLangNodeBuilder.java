@@ -404,6 +404,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRecordVarRef.BLangR
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangRegExpTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -2543,9 +2544,9 @@ public class BLangNodeBuilder extends NodeTransformer<BLangNode> {
         }
 
         if (receiveWorkers.kind() == SyntaxKind.STREAM_RECEIVE) {
-            dlog.error(receiveActionPos, DiagnosticErrorCode.STREAM_RECEIVE_ACTION_NOT_YET_SUPPORTED);
-            // mock rest of the flow as an alternative receive
-            return createAlternateWorkerReceive(((StreamReceiveNode) receiveWorkers).workers(), receiveActionPos);
+            SeparatedNodeList<SimpleNameReferenceNode> streamWorkers =
+                    ((StreamReceiveNode) receiveWorkers).workers();
+            return createStreamWorkerReceive(streamWorkers, receiveActionPos);
         }
 
         ReceiveFieldsNode receiveFieldsNode = (ReceiveFieldsNode) receiveWorkers;
@@ -2582,6 +2583,19 @@ public class BLangNodeBuilder extends NodeTransformer<BLangNode> {
         alternateWorkerRecv.setWorkerReceives(workerReceives);
         alternateWorkerRecv.pos = receiveActionPos;
         return alternateWorkerRecv;
+    }
+
+    private BLangStreamWorkerReceive createStreamWorkerReceive( // TODO: combined with alternate receive
+            SeparatedNodeList<SimpleNameReferenceNode> alternateWorkers, Location receiveActionPos) {
+        List<BLangWorkerReceive> workerReceives = new ArrayList<>(alternateWorkers.size());
+        for (SimpleNameReferenceNode w : alternateWorkers) {
+            workerReceives.add(createSimpleWorkerReceive(w.name()));
+        }
+
+        BLangStreamWorkerReceive streamWorkerRecv = TreeBuilder.createStreamWorkerReceiveNode();
+        streamWorkerRecv.setWorkerReceives(workerReceives);
+        streamWorkerRecv.pos = receiveActionPos;
+        return streamWorkerRecv;
     }
 
     private BLangWorkerReceive createSimpleWorkerReceive(Token workerRef) {

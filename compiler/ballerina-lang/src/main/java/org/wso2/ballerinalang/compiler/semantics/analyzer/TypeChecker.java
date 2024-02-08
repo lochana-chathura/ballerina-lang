@@ -136,6 +136,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRegExpTemplateLiter
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangServiceConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -2862,6 +2863,16 @@ public class TypeChecker extends SimpleBLangNodeAnalyzer<TypeChecker.AnalyzerDat
     }
 
     @Override
+    public void visit(BLangStreamWorkerReceive streamWorkerReceive, AnalyzerData data) {
+        // TODO: do we need to typechek for stream here?
+        for (BLangWorkerReceive bLangWorkerReceive : streamWorkerReceive.getWorkerReceives()) {
+            bLangWorkerReceive.accept(this, data);
+        }
+        streamWorkerReceive.setBType(data.expType);
+        data.resultType = data.expType;
+    }
+
+    @Override
     public void visit(BLangMultipleWorkerReceive multipleWorkerReceive, AnalyzerData data) {
         BType compatibleType = validateAndGetMultipleReceiveCompatibleType(data.expType, multipleWorkerReceive, data);
         if (symTable.semanticError.tag == compatibleType.tag) {
@@ -2905,7 +2916,7 @@ public class TypeChecker extends SimpleBLangNodeAnalyzer<TypeChecker.AnalyzerDat
     private BType validateAndGetMultipleReceiveCompatibleType(BType bType,
                                                               BLangMultipleWorkerReceive multipleWorkerReceive,
                                                               AnalyzerData data) {
-        HashSet<String> multipleReceiveFieldNames = new HashSet<>();
+        HashSet<String> multipleReceiveFieldNames = new LinkedHashSet<>();
         for (BLangMultipleWorkerReceive.BLangReceiveField receiveField : multipleWorkerReceive.getReceiveFields()) {
             BLangIdentifier key = receiveField.getKey();
             String fieldName = key.value;

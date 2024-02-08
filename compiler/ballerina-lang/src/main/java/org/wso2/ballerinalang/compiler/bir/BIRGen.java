@@ -154,6 +154,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangF
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangLocalVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef.BLangPackageVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStatementExpression;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTrapExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTypeConversionExpr;
@@ -1170,6 +1171,12 @@ public class BIRGen extends BLangNodeVisitor {
             channels.add(workerReceive.getChannel().channelId());
         }
         return channels;
+    }
+
+    @Override
+    public void visit(BLangStreamWorkerReceive streamWorkerReceive) {
+        // TODO: 6/2/24 implement
+        throw new AssertionError(DiagnosticErrorCode.STREAM_RECEIVE_ACTION_NOT_YET_SUPPORTED);
     }
 
     @Override

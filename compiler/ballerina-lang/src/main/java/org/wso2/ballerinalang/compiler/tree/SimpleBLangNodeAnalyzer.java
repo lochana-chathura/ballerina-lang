@@ -105,6 +105,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangServiceConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStatementExpression;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -1047,6 +1048,11 @@ public abstract class SimpleBLangNodeAnalyzer<T> extends BLangNodeAnalyzer<T> {
     }
 
     public void visit(BLangAlternateWorkerReceive node, T data) {
+        analyzeNode(node, data);
+        visitNode(node.getWorkerReceives(), data);
+    }
+
+    public void visit(BLangStreamWorkerReceive node, T data) {
         analyzeNode(node, data);
         visitNode(node.getWorkerReceives(), data);
     }

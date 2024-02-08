@@ -148,6 +148,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangServiceConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStatementExpression;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -1034,6 +1035,19 @@ public class NodeCloner extends BLangNodeVisitor {
     @Override
     public void visit(BLangAlternateWorkerReceive source) {
         BLangAlternateWorkerReceive clone = new BLangAlternateWorkerReceive();
+        source.cloneRef = clone;
+
+        List<BLangWorkerReceive> workerReceives = new ArrayList<>(source.getWorkerReceives().size());
+        for (BLangWorkerReceive workerReceive : source.getWorkerReceives()) {
+            workerReceives.add(clone(workerReceive));
+        }
+
+        clone.setWorkerReceives(workerReceives);
+    }
+
+    @Override
+    public void visit(BLangStreamWorkerReceive source) {
+        BLangStreamWorkerReceive clone = new BLangStreamWorkerReceive();
         source.cloneRef = clone;
 
         List<BLangWorkerReceive> workerReceives = new ArrayList<>(source.getWorkerReceives().size());

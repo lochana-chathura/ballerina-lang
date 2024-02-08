@@ -147,6 +147,7 @@ import org.wso2.ballerinalang.compiler.tree.expressions.BLangRegExpTemplateLiter
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangRestArgsExpression;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangServiceConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangSimpleVarRef;
+import org.wso2.ballerinalang.compiler.tree.expressions.BLangStreamWorkerReceive;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangStringTemplateLiteral;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTableConstructorExpr;
 import org.wso2.ballerinalang.compiler.tree.expressions.BLangTernaryExpr;
@@ -1087,6 +1088,13 @@ public class DataflowAnalyzer extends BLangNodeVisitor {
     @Override
     public void visit(BLangAlternateWorkerReceive altWorkerReceive) {
         for (BLangWorkerReceive workerReceive : altWorkerReceive.getWorkerReceives()) {
+            analyzeNode(workerReceive, env);
+        }
+    }
+
+    @Override
+    public void visit(BLangStreamWorkerReceive streamWorkerReceive) {
+        for (BLangWorkerReceive workerReceive : streamWorkerReceive.getWorkerReceives()) {
             analyzeNode(workerReceive, env);
         }
     }
