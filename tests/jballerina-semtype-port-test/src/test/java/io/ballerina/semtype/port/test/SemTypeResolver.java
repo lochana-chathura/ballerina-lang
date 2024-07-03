@@ -544,7 +544,7 @@ public class SemTypeResolver {
         }
 
         if (td.flagSet.contains(Flag.DISTINCT)) {
-            err = Core.intersect(SemTypes.errorDistinct(cx.env.distinctAtomCounter.getAndIncrement()), err);
+            err = Core.intersect(SemTypes.errorDistinct(cx.env.distinctAtomCount.getAndIncrement()), err);
         }
         return err;
     }

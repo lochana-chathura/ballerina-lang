@@ -34,7 +34,7 @@ public class Env {
     final List<ListAtomicType> recListAtoms;
     final List<MappingAtomicType> recMappingAtoms;
     final List<FunctionAtomicType> recFunctionAtoms;
-    public final AtomicInteger distinctAtomCounter;
+    public final AtomicInteger distinctAtomCount;
 
     private final LinkedHashMap<String, SemType> types;
 
@@ -44,7 +44,7 @@ public class Env {
         this.recMappingAtoms = new ArrayList<>();
         this.recFunctionAtoms = new ArrayList<>();
         types = new LinkedHashMap<>();
-        distinctAtomCounter = new AtomicInteger(0);
+        distinctAtomCount = new AtomicInteger(0);
 
         PredefinedTypeEnv.getInstance().initializeEnv(this);
     }

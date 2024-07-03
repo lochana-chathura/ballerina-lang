@@ -350,6 +350,6 @@ public final class PredefinedTypeEnv {
     }
 
     public boolean isPredefinedRecAtom(int index) {
-        return index < reservedAtomCount();
+        return index >= 0 & index < reservedAtomCount();
     }
 }

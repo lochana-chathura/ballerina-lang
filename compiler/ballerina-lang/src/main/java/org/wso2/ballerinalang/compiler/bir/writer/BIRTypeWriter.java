@@ -676,7 +676,8 @@ public class BIRTypeWriter extends TypeVisitor {
             if (predefinedTypeEnv.isPredefinedRecAtom(index)) {
                 buff.writeBoolean(true);
                 buff.writeInt(index);
-            } else if (recAtom.kind() == Atom.Kind.XML_ATOM || visitedAtoms.contains(recAtom.getIdentifier())) {
+            } else if (recAtom.kind() == Atom.Kind.XML_ATOM || recAtom.kind() == Atom.Kind.DISTINCT_ATOM ||
+                    visitedAtoms.contains(recAtom.getIdentifier())) {
                 buff.writeBoolean(true);
                 buff.writeInt(index);
                 buff.writeInt(recAtom.kind().ordinal());
@@ -687,7 +688,8 @@ public class BIRTypeWriter extends TypeVisitor {
                     case LIST_ATOM -> typeEnv.listAtomType(recAtom);
                     case FUNCTION_ATOM -> typeEnv.functionAtomType(recAtom);
                     case MAPPING_ATOM -> typeEnv.mappingAtomType(recAtom);
-                    case XML_ATOM -> throw new IllegalStateException("Should not happen. Handled before reaching here");
+                    case DISTINCT_ATOM, XML_ATOM ->
+                            throw new IllegalStateException("Should not happen. Handled before reaching here");
                     case CELL_ATOM -> throw new IllegalStateException("Cell atom cannot be recursive");
                 };
                 buff.writeInt(index);
