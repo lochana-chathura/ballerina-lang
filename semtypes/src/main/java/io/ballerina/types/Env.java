@@ -20,6 +20,7 @@ package io.ballerina.types;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ public class Env {
     final List<ListAtomicType> recListAtoms;
     final List<MappingAtomicType> recMappingAtoms;
     final List<FunctionAtomicType> recFunctionAtoms;
+    public final AtomicInteger distinctAtomCounter;
     private final Map<AtomicType, Reference<TypeAtom>> atomTable;
 
     private final LinkedHashMap<String, SemType> types;
@@ -47,6 +49,7 @@ public class Env {
         this.recMappingAtoms = new ArrayList<>();
         this.recFunctionAtoms = new ArrayList<>();
         types = new LinkedHashMap<>();
+        distinctAtomCounter = new AtomicInteger(0);
 
         PredefinedTypeEnv.getInstance().initializeEnv(this);
     }
