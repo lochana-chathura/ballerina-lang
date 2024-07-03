@@ -1583,7 +1583,7 @@ public class BIRPackageSymbolEnter {
                         errorSymbol = new BErrorTypeSymbol(SymTag.ERROR, Flags.PUBLIC, Names.EMPTY,
                                 env.pkgSymbol.pkgID, null, env.pkgSymbol, symTable.builtinPos, COMPILED_SOURCE);
                     }
-                    BErrorType errorType = new BErrorType(errorSymbol);
+                    BErrorType errorType = new BErrorType(symTable.typeEnv(), errorSymbol);
                     addShapeCP(errorType, cpI);
                     compositeStack.push(errorType);
                     String errorName = getStringCPEntryValue(inputStream);
