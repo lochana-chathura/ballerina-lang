@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Env node.
@@ -33,6 +34,7 @@ public class Env {
     final List<ListAtomicType> recListAtoms;
     final List<MappingAtomicType> recMappingAtoms;
     final List<FunctionAtomicType> recFunctionAtoms;
+    public final AtomicInteger distinctAtomCounter;
 
     private final LinkedHashMap<String, SemType> types;
 
@@ -42,6 +44,7 @@ public class Env {
         this.recMappingAtoms = new ArrayList<>();
         this.recFunctionAtoms = new ArrayList<>();
         types = new LinkedHashMap<>();
+        distinctAtomCounter = new AtomicInteger(0);
 
         PredefinedTypeEnv.getInstance().initializeEnv(this);
     }
