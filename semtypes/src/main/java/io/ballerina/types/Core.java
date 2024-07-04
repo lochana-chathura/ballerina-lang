@@ -71,8 +71,8 @@ import static io.ballerina.types.typeops.MappingOps.bddMappingMemberTypeInner;
  */
 public final class Core {
 
-    private static final boolean SEM_PORT_TEST =
-            Boolean.parseBoolean(System.getProperty("ballerina.semtype.port.test"));
+    private static final boolean SEM_ALL_TEST =
+            Boolean.parseBoolean(System.getProperty("ballerina.semtype.all.types.test"));
 
     public static CellAtomicType cellAtomType(Atom atom) {
         return (CellAtomicType) ((TypeAtom) atom).atomicType();
@@ -327,7 +327,7 @@ public final class Core {
         // TODO: remove this intersect once all types are implemented.
         // The predefined readonly and other atoms contain types that are not yet implemented.
         // This is a temporary workaround to remove the unimplemented portion of the type.
-        if (!SEM_PORT_TEST) {
+        if (!SEM_ALL_TEST) {
             t = intersect(t, PredefinedType.IMPLEMENTED_TYPES);
         }
 
