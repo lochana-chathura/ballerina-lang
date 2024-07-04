@@ -84,11 +84,11 @@ public class BErrorType extends BType implements ErrorType {
     @Override
     public SemType semType() {
         SemType err;
-        if (detailType == null) {
+        if (detailType == null || detailType.semType() == null) {
+            // semtype will be null for semantic error
             err = PredefinedType.ERROR;
         } else {
             SemType detail = detailType.semType();
-            assert detail != null;
             err = SemTypes.errorDetail(detail);
         }
 
