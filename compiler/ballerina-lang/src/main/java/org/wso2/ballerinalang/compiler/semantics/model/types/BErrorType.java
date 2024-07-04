@@ -95,7 +95,7 @@ public class BErrorType extends BType implements ErrorType {
         if (Symbols.isFlagOn(this.getFlags(), Flags.DISTINCT)) {
             // this is to avoid creating a new ID every time calling this method
             if (distinctId == -1) {
-                distinctId = env.distinctAtomCount.getAndIncrement();
+                distinctId = env.distinctAtomCountGetAndIncrement();
             }
             err = SemTypes.intersect(SemTypes.errorDistinct(distinctId), err);
         }

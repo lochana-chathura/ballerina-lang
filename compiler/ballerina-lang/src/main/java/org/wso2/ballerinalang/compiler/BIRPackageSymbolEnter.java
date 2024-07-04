@@ -2237,6 +2237,7 @@ public class BIRPackageSymbolEnter {
                                int distinctOffset) {
 
         static AtomOffsets from(Env env) {
+<<<<<<< HEAD
             PredefinedTypeEnv predefinedTypeEnv = PredefinedTypeEnv.getInstance();
             int recAtomOffset = predefinedTypeEnv.reservedRecAtomCount();
             return new AtomOffsets(env.atomCount(),
@@ -2244,6 +2245,10 @@ public class BIRPackageSymbolEnter {
                     env.recFunctionAtomCount(),
                     env.recMappingAtomCount() - recAtomOffset,
                     env.distinctAtomCount.get());
+=======
+            return new AtomOffsets(env.recListAtomCount(), env.recFunctionAtomCount(), env.recMappingAtomCount(),
+                    env.distinctAtomCount());
+>>>>>>> 284be949af4 (Fix spotbugs failure in semtype module)
         }
     }
 }
