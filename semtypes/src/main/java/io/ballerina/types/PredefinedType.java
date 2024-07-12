@@ -105,7 +105,7 @@ public final class PredefinedType {
 
     public static final SemType IMPLEMENTED_TYPES =
             union(FUNCTION, union(SIMPLE_OR_STRING, union(XML, union(HANDLE, union(REGEXP, union(FUTURE,
-                    union(STREAM, union(TYPEDESC, union(LIST, MAPPING)))))))));
+                    union(STREAM, union(TYPEDESC, union(TABLE, union(LIST, MAPPING))))))))));
     public static final SemType IMPLEMENTED_ANY_TYPE = intersect(ANY, IMPLEMENTED_TYPES);
 
     public static final BasicTypeBitSet NUMBER =
@@ -188,6 +188,7 @@ public final class PredefinedType {
     public static final SemType IMPLEMENTED_VAL_READONLY = createComplexSemType(IMPLEMENTED_INHERENTLY_IMMUTABLE,
             BasicSubtype.from(BT_LIST, BDD_SUBTYPE_RO),
             BasicSubtype.from(BT_MAPPING, BDD_SUBTYPE_RO),
+            BasicSubtype.from(BT_TABLE, LIST_SUBTYPE_THREE_ELEMENT_RO),
             BasicSubtype.from(BT_XML, XML_SUBTYPE_RO)
     );
 

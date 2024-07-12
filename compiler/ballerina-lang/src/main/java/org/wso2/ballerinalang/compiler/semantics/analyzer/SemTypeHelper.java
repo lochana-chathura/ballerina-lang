@@ -127,6 +127,7 @@ public final class SemTypeHelper {
             case TypeTags.FUTURE:
             case TypeTags.TYPEDESC:
             case TypeTags.STREAM:
+            case TypeTags.TABLE:
                 return t.semType();
             default:
                 if (isFullSemType(t.tag)) {
@@ -160,11 +161,11 @@ public final class SemTypeHelper {
             return includesNonSemTypes(((BTypeReferenceType) t).referredType);
         }
 
-        if (isFullSemType(t.tag) || t.tag == TypeTags.JSON) {
+        if (isFullSemType(t.tag) || t.tag == TypeTags.JSON || t.tag == TypeTags.ANYDATA) {
             return false;
         }
 
-        if (t.tag == TypeTags.ANY || t.tag == TypeTags.ANYDATA || t.tag == TypeTags.READONLY) {
+        if (t.tag == TypeTags.ANY || t.tag == TypeTags.READONLY) {
             return true;
         }
 
