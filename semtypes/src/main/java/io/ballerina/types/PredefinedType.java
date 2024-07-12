@@ -128,6 +128,7 @@ public final class PredefinedType {
 
     public static final CellAtomicType CELL_ATOMIC_VAL = predefinedTypeEnv.cellAtomicVal();
     public static final TypeAtom ATOM_CELL_VAL = predefinedTypeEnv.atomCellVal();
+    public static final CellSemType CELL_SEMTYPE_VAL = (CellSemType) basicSubtype(BT_CELL, bddAtom(ATOM_CELL_VAL));
 
     public static final CellAtomicType CELL_ATOMIC_NEVER = predefinedTypeEnv.cellAtomicNever();
     public static final TypeAtom ATOM_CELL_NEVER = predefinedTypeEnv.atomCellNever();
@@ -165,10 +166,23 @@ public final class PredefinedType {
     // represents readonly & (map<readonly>)[]
     static final BddNode LIST_SUBTYPE_MAPPING_RO = bddAtom(ATOM_LIST_MAPPING_RO);
 
+    public static final TypeAtom ATOM_CELL_UNDEF = predefinedTypeEnv.atomCellUndef();
+    public static final CellSemType CELL_SEMTYPE_UNDEF = (CellSemType) basicSubtype(BT_CELL, bddAtom(ATOM_CELL_UNDEF));
+
+    public static final ComplexSemType MAPPING_ARRAY_RO = basicSubtype(BT_LIST, LIST_SUBTYPE_MAPPING_RO);
+    public static final TypeAtom ATOM_CELL_MAPPING_ARRAY_RO = predefinedTypeEnv.atomCellMappingArrayRO();
+    public static final CellSemType CELL_SEMTYPE_LIST_SUBTYPE_MAPPING_RO = (CellSemType) basicSubtype(
+            BT_CELL, bddAtom(ATOM_CELL_MAPPING_ARRAY_RO)
+    );
+
+    static final TypeAtom ATOM_LIST_THREE_ELEMENT_RO = predefinedTypeEnv.atomListThreeElementRO();
+    // represents [(readonly & map<any|error>)[], any|error, any|error]
+    public static final BddNode LIST_SUBTYPE_THREE_ELEMENT_RO = bddAtom(ATOM_LIST_THREE_ELEMENT_RO);
+
     public static final SemType VAL_READONLY = createComplexSemType(VT_INHERENTLY_IMMUTABLE,
             BasicSubtype.from(BT_LIST, BDD_SUBTYPE_RO),
             BasicSubtype.from(BT_MAPPING, BDD_SUBTYPE_RO),
-            BasicSubtype.from(BT_TABLE, LIST_SUBTYPE_MAPPING_RO),
+            BasicSubtype.from(BT_TABLE, LIST_SUBTYPE_THREE_ELEMENT_RO),
             BasicSubtype.from(BT_XML, XML_SUBTYPE_RO)
     );
     public static final SemType IMPLEMENTED_VAL_READONLY = createComplexSemType(IMPLEMENTED_INHERENTLY_IMMUTABLE,
@@ -185,19 +199,20 @@ public final class PredefinedType {
     );
 
     public static final CellAtomicType CELL_ATOMIC_UNDEF = predefinedTypeEnv.cellAtomicUndef();
-    public static final TypeAtom ATOM_CELL_UNDEF = predefinedTypeEnv.atomCellUndef();
-    public static final CellSemType CELL_SEMTYPE_UNDEF = (CellSemType) basicSubtype(
-            BT_CELL, bddAtom(ATOM_CELL_UNDEF)
-    );
-
-    public static final CellSemType CELL_SEMTYPE_VAL = (CellSemType) basicSubtype(
-            BT_CELL, bddAtom(ATOM_CELL_VAL)
-    );
 
     public static final ListAtomicType LIST_ATOMIC_TWO_ELEMENT = predefinedTypeEnv.listAtomicTwoElement();
     static final TypeAtom ATOM_LIST_TWO_ELEMENT = predefinedTypeEnv.atomListTwoElement();
     // represents [any|error, any|error]
     public static final BddNode LIST_SUBTYPE_TWO_ELEMENT = bddAtom(ATOM_LIST_TWO_ELEMENT);
+
+    public static final ComplexSemType MAPPING_ARRAY = basicSubtype(BT_LIST, LIST_SUBTYPE_MAPPING);
+    public static final TypeAtom ATOM_CELL_MAPPING_ARRAY = predefinedTypeEnv.atomCellMappingArray();
+    public static final CellSemType CELL_SEMTYPE_LIST_SUBTYPE_MAPPING = (CellSemType) basicSubtype(
+            BT_CELL, bddAtom(ATOM_CELL_MAPPING_ARRAY)
+    );
+    static final TypeAtom ATOM_LIST_THREE_ELEMENT = predefinedTypeEnv.atomListThreeElement();
+    // represents [(map<any|error>)[], any|error, any|error]
+    public static final BddNode LIST_SUBTYPE_THREE_ELEMENT = bddAtom(ATOM_LIST_THREE_ELEMENT);
 
     public static final MappingAtomicType MAPPING_ATOMIC_RO = predefinedTypeEnv.mappingAtomicRO();
 
