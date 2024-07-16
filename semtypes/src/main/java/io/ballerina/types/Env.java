@@ -265,7 +265,7 @@ public class Env {
             case LIST_ATOM -> compactionData.listMap().get(recAtom.index());
             case MAPPING_ATOM -> compactionData.mapMap().get(recAtom.index());
             case FUNCTION_ATOM -> compactionData.funcMap().get(recAtom.index());
-            case CELL_ATOM, XML_ATOM -> recAtom.index;
+            case CELL_ATOM, XML_ATOM, DISTINCT_ATOM -> recAtom.index;
         };
     }
 
