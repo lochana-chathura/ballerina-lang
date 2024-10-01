@@ -19,6 +19,7 @@ package org.wso2.ballerinalang.compiler.bir.codegen;
 
 import io.ballerina.identifier.Utils;
 import io.ballerina.tools.diagnostics.Location;
+import io.ballerina.types.PredefinedType;
 import org.ballerinalang.compiler.BLangCompilerException;
 import org.ballerinalang.model.elements.Flag;
 import org.ballerinalang.model.elements.PackageID;
@@ -53,6 +54,7 @@ import org.wso2.ballerinalang.compiler.bir.model.InstructionKind;
 import org.wso2.ballerinalang.compiler.bir.model.VarKind;
 import org.wso2.ballerinalang.compiler.bir.model.VarScope;
 import org.wso2.ballerinalang.compiler.diagnostic.BLangDiagnosticLocation;
+import org.wso2.ballerinalang.compiler.semantics.analyzer.SemTypeHelper;
 import org.wso2.ballerinalang.compiler.semantics.model.Scope;
 import org.wso2.ballerinalang.compiler.semantics.model.SymbolTable;
 import org.wso2.ballerinalang.compiler.semantics.model.symbols.BAttachedFunction;
@@ -985,20 +987,7 @@ class JvmObservabilityGen {
      * @return True if an error can be assigned and false otherwise
      */
     private boolean isErrorAssignable(BIRVariableDcl variableDcl) {
-        boolean isErrorAssignable = false;
-        if (variableDcl.type instanceof BUnionType returnUnionType) {
-            boolean b = false;
-            for (BType type : returnUnionType.getMemberTypes()) {
-                if (type instanceof BErrorType) {
-                    b = true;
-                    break;
-                }
-            }
-            isErrorAssignable = b;
-        } else if (variableDcl.type instanceof BErrorType) {
-            isErrorAssignable = true;
-        }
-        return isErrorAssignable;
+        return SemTypeHelper.containsBasicType(variableDcl.type, PredefinedType.ERROR);
     }
 
     /**
